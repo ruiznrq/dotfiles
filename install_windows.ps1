@@ -17,7 +17,7 @@ Write-Output "`n- Install Alacritty configuration in $AlacrittyPath"
 
 if (Test-Path -Path $AlacrittyPath) {
 	Write-Output "`tAlacritty folder already exists in $AlacrittyPath, it will be deleted"
-	Get-ChildItem -Path $AlacrittyPath * -Recurse | Remove-Item
+	Get-ChildItem -Path $AlacrittyPath * -Recurse | Remove-Item # TODO - Only remove files as in ./Alacritty (keep other files)
 	(Get-Item $AlacrittyPath).Delete()
 }
 Write-Output "`tCreating Alacritty folder in $AlacrittyPath"
