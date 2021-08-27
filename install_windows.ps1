@@ -11,6 +11,19 @@ else {
 }
 
 
+# Intall Windows fonts
+$FontFolder = ".\fonts\Hack Nerd Font Windows"
+Write-Output "`n- Install fonts from $FontFolder"
+$FontItem = Get-Item -Path $FontFolder
+$FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
+foreach ($Font in $FontList) {
+	# TODO - Only install missing fonts
+	Write-Output '`tInstalling font -' $Font.BaseName
+    Copy-Item $Font "C:\Windows\Fonts"
+    New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name         
+}
+
+
 # Create symbolic link to deploy dotfiles
 $AlacrittyPath = "$HOME\AppData\Roaming\alacritty\"
 Write-Output "`n- Install Alacritty configuration in $AlacrittyPath"
