@@ -22,13 +22,13 @@ scrolling:
 
 font:
     normal:
-        family: Hack Nerd Font
+        family: Hack NF
         style: Regular
     bold:
-        family: Hack Nerd Font
+        family: Hack NF
         style: Bold
     italic:
-        family: Hack Nerd Font
+        family: Hack NF
         style: Italic
 
     # Point size of the font
@@ -150,8 +150,8 @@ key_bindings:
     - { key: D,        mods: Super, action: DecreaseFontSize     }
     - { key: D,        mods: Super, action: DecreaseFontSize     }
     # Vi mode
-    - { key: V,        mods: Control,  action: ToggleViMode  }
-    - { key: Q,        mode: Vi,           action: ToggleViMode  }
+    - { key: V,        mods: Alt,  action: ToggleViMode  }
+    - { key: Q,        mode: Vi,   action: ToggleViMode  }
     - { key: H,        mods: Shift, mode: Vi,  action: First     }
     - { key: L,        mods: Shift, mode: Vi,  action: Last      }
     # Tmux-like
