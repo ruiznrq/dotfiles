@@ -15,16 +15,16 @@ else {
 $FontFolder = ".\fonts\Hack Nerd Font Windows"
 Write-Output "`n- Install fonts from $FontFolder"
 $FontItem = Get-Item -Path $FontFolder
-$FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
+$FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon', '*.otf', '*.ttc', '*.ttf')
 foreach ($Font in $FontList) {
 	# TODO - Only install missing fonts
 	Write-Output '`tInstalling font -' $Font.BaseName
-    Copy-Item $Font "C:\Windows\Fonts"
-    New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name         
+	Copy-Item $Font "C:\Windows\Fonts"
+	New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name
 }
 
 
-# Create symbolic link to deploy dotfiles
+# Create symbolic link to deploy Alacritty dotfiles
 $AlacrittyPath = "$HOME\AppData\Roaming\alacritty\"
 Write-Output "`n- Install Alacritty configuration in $AlacrittyPath"
 
@@ -35,3 +35,23 @@ if (Test-Path -Path $AlacrittyPath) {
 }
 Write-Output "`tCreating Alacritty folder in $AlacrittyPath"
 New-Item -ItemType SymbolicLink -Path $AlacrittyPath -Target "./alacritty"
+
+
+# Create symbolic link to deploy Alacritty dotfiles
+$NvimPath = "$HOME\AppData\Local\nvim"
+Write-Output "`n- Install Alacritty configuration in $NvimPath"
+
+if (Test-Path -Path $NvimPath) {
+	Write-Output "`tNvim folder already exists in $NvimPath, it will be deleted"
+	# TODO - Check if there is already a non symbolic folder
+	(Get-Item $NvimPath).Delete()
+}
+Write-Output "`tCreating Nvim folder in $NvimPath"
+New-Item -ItemType SymbolicLink -Path $NvimPath -Target "./nvim"
+
+# Install NeoVim package manager - Packer
+$PackerFolder = "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\"
+if (Test-Path -Path $NvimPath) {
+	(Get-Item $PackerFolder).Delete()
+	git clone https://github.com/wbthomason/packer.nvim "$PackerFolder\packer.nvim"
+}
