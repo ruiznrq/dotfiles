@@ -6,6 +6,17 @@ require('packer').startup(function()
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate'
    }
+
+   use 'neovim/nvim-lspconfig'
+
+   -- Install nvim-cmp, and buffer source as a dependency
+   use {
+   "hrsh7th/nvim-cmp",
+   requires = {
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/cmp-buffer",
+   }
+   }
 end)
 
 require'nvim-treesitter.configs'.setup {
@@ -21,3 +32,18 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+require'lspconfig'.rust_analyzer.setup({})
+
+  local cmp = require'cmp'
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
+    mapping = {
+      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = {}
+  })
