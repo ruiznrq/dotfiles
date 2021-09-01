@@ -47,9 +47,9 @@ Write-Output "`tCreating Alacritty folder in $AlacrittyPath"
 New-Item -ItemType SymbolicLink -Path $AlacrittyPath -Target "./alacritty"
 
 
-# Create symbolic link to deploy Alacritty dotfiles
+# Create symbolic link to deploy NeoVim dotfiles
 $NvimPath = "$HOME\AppData\Local\nvim"
-Write-Output "`n- Install Alacritty configuration in $NvimPath"
+Write-Output "`n- Install NeoVim configuration in $NvimPath"
 
 if (Test-Path -Path $NvimPath) {
 	Write-Output "`tNvim folder already exists in $NvimPath, it will be deleted"
