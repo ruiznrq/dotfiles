@@ -1,3 +1,9 @@
+-------------------- HELPERS -------------------------------
+-- local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
+-- local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
+-- local g = vim.g      -- a table to access global variables
+-- local opt = vim.opt  -- to set options
+
 require('packer').startup(function()
    -- Packer can manage itself
    use 'wbthomason/packer.nvim'
@@ -9,14 +15,7 @@ require('packer').startup(function()
 
    use 'neovim/nvim-lspconfig'
 
-   -- Install nvim-cmp, and buffer source as a dependency
-   use {
-   "hrsh7th/nvim-cmp",
-   requires = {
-      "hrsh7th/vim-vsnip",
-      "hrsh7th/cmp-buffer",
-   }
-   }
+   use 'nvim-lua/completion-nvim'
 end)
 
 require'nvim-treesitter.configs'.setup {
@@ -33,17 +32,12 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require'lspconfig'.rust_analyzer.setup({})
+-- function to attach completion when setting up lsp
+local on_attach = function(client)
+    require'completion'.on_attach(client)
+end
 
-  local cmp = require'cmp'
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-      end,
-    },
-    mapping = {
-      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    },
-    sources = {}
-  })
+vim.opt.completeopt = {'menuone', 'noinsert', 'noselect'}
+
+-- Enable rust_analyzer
+require'lspconfig'.rust_analyzer.setup({ on_attach=on_attach })
