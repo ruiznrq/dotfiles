@@ -59,9 +59,9 @@ if (Test-Path -Path $NvimPath) {
 Write-Output "`tCreating Nvim folder in $NvimPath"
 New-Item -ItemType SymbolicLink -Path $NvimPath -Target "./nvim"
 
-# Install NeoVim package manager - Packer
-$PackerFolder = "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\"
+# Install NeoVim package manager - Paq
+$PackerFolder = "$env:LOCALAPPDATA\nvim-data\site\pack\paqs\start"
 if (Test-Path -Path $NvimPath) {
 	(Get-Item $PackerFolder).Delete()
-	git clone https://github.com/wbthomason/packer.nvim "$PackerFolder\packer.nvim"
+	git clone https://github.com/savq/paq-nvim.git "$PackerFolder\paq-nvim"
 }
