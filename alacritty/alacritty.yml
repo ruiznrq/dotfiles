@@ -32,7 +32,7 @@ font:
         style: Italic
 
     # Point size of the font
-    size: 12
+    size: 14
 
 # Colors (One Dark); if dim colors are not set, they will be calculated
 # automatically based on the `normal` colors
