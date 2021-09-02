@@ -149,7 +149,7 @@ map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
 -------------------- LSP -----------------------------------
 for ls, cfg in pairs({
-  rust_analyzer = {},
+  rust_analyzer = {}, clangd = {},
 }) do require('lspconfig')[ls].setup(cfg) end
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
