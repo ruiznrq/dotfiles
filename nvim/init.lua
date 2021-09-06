@@ -13,6 +13,7 @@ end
 cmd 'packadd paq-nvim'
 local paq = require('paq-nvim').paq
 paq {'savq/paq-nvim', opt = true}
+paq {'neoclide/coc.nvim', branch = 'release'}
 
 -------------------- PLUGIN SETUP --------------------------
 
