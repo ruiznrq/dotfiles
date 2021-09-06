@@ -20,3 +20,10 @@ ln -s "$CURRENT_DIR/alacritty linux" $ALACRITTY
 NEOVIM="$HOME/.config/nvim"
 rm -rf $NEOVIM
 ln -s "$CURRENT_DIR/nvim" $NEOVIM
+
+
+# Install neovim package manager
+rm -rf "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
+git clone --depth=1 https://github.com/savq/paq-nvim.git \
+    "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
+
