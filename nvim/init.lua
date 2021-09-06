@@ -10,10 +10,12 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -------------------- PLUGINS -------------------------------
-cmd 'packadd paq-nvim'
-local paq = require('paq-nvim').paq
-paq {'savq/paq-nvim', opt = true}
-paq {'neoclide/coc.nvim', branch = 'release'}
+
+require 'paq' {
+	{'savq/paq-nvim', opt = true},
+	{'neoclide/coc.nvim', branch = 'release'},
+    	{'nvim-treesitter/nvim-treesitter'},
+}
 
 -------------------- PLUGIN SETUP --------------------------
 
@@ -193,7 +195,17 @@ false)
 
 
 -------------------- TREE-SITTER ---------------------------
-
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {'c', 'cpp', 'c_sharp', 'lua', 'rust', 'zig'}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 -------------------- COMMANDS ------------------------------
 function init_term()
