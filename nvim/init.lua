@@ -18,13 +18,54 @@ require 'paq' {
 	{'neoclide/coc.nvim', branch = 'release'},
   {'nvim-treesitter/nvim-treesitter'},
   {'itchyny/lightline.vim'},
+  {'junegunn/fzf'},
+  {'junegunn/fzf.vim'},
+  {'ojroques/nvim-lspfuzzy', branch = 'dev'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
 -- lightline
 vim.api.nvim_command('set noshowmode') -- Don't display insert mode
+-- fzf and fzf.vim
+g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
+map('n', '<leader>/', '<cmd>History/<CR>')
+map('n', '<leader>;', '<cmd>History:<CR>')
+map('n', '<leader>f', '<cmd>Files<CR>')
+map('n', '<leader>r', '<cmd>Rg<CR>')
+map('n', 's', '<cmd>Buffers<CR>')
+-- nvim-lspfuzzy
+require('lspfuzzy').setup()
 
 -------------------- OPTIONS -------------------------------
+local indent, width = 2, 80
+opt.colorcolumn = tostring(width)   -- Line length marker
+opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
+opt.cursorline = true               -- Highlight cursor line
+opt.expandtab = true                -- Use spaces instead of tabs
+opt.formatoptions = 'crqnj'         -- Automatic formatting options
+opt.ignorecase = true               -- Ignore case
+opt.inccommand = ''                 -- Disable substitution preview
+opt.list = true                     -- Show some invisible characters
+opt.number = true                   -- Show line numbers
+opt.pastetoggle = '<F2>'            -- Paste mode
+opt.pumheight = 12                  -- Max height of popup menu
+opt.relativenumber = true           -- Relative line numbers
+opt.scrolloff = 4                   -- Lines of context
+opt.shiftround = true               -- Round indent
+opt.shiftwidth = indent             -- Size of an indent
+opt.shortmess = 'atToOFc'           -- Prompt message options
+opt.sidescrolloff = 8               -- Columns of context
+opt.signcolumn = 'yes'              -- Show sign column
+opt.smartcase = true                -- Do not ignore case with capitals
+opt.smartindent = true              -- Insert indents automatically
+opt.splitbelow = true               -- Put new windows below current
+opt.splitright = true               -- Put new windows right of current
+opt.tabstop = indent                -- Number of spaces tabs count for
+opt.termguicolors = true            -- True color support
+opt.textwidth = width               -- Maximum width of text
+opt.updatetime = 100                -- Delay before swap file is saved
+opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
+opt.wrap = false                    -- Disable line wrap
 
 
 -------------------- MAPPINGS ------------------------------
@@ -49,24 +90,27 @@ set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=300
+" -- Done in lua
+" set updatetime=300
 
 " Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+" -- Done in lua
+" set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
+" -- Done in lua
+" if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+  " set signcolumn=number
+" else
+  " set signcolumn=yes
+" endif
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : check_back_space() ? "\<TAB>" : coc#refresh()
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " function! s:check_back_space() abort
