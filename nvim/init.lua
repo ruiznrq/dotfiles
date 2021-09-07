@@ -12,19 +12,17 @@ end
 g.mapleader = ' '
 
 -------------------- PLUGINS -------------------------------
-cmd 'packadd paq-nvim'
-local paq = require('paq-nvim').paq
-paq {'savq/paq-nvim', opt = true}
-paq {'neoclide/coc.nvim', branch = 'release'}
 
 require 'paq' {
 	{'savq/paq-nvim', opt = true},
 	{'neoclide/coc.nvim', branch = 'release'},
-    	{'nvim-treesitter/nvim-treesitter'},
+  {'nvim-treesitter/nvim-treesitter'},
+  {'itchyny/lightline.vim'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
-
+-- lightline
+vim.api.nvim_command('set noshowmode') -- Don't display insert mode
 
 -------------------- OPTIONS -------------------------------
 
