@@ -28,14 +28,10 @@ require 'paq' {
   {'s1n7ax/nvim-terminal'},
   {'airblade/vim-rooter'},
   {'goolord/alpha-nvim'},
+  {'smiteshp/nvim-gps'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
--- Lualine
-require('lualine').setup({
-  options = { theme = 'tokyonight' },
-  sections = { lualine_x = {'encoding', 'filetype'} },
-})
 -- Tokyonight
 vim.g.tokyonight_style = "night"
 vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
@@ -48,6 +44,24 @@ require('nvim-terminal').setup()
 vim.cmd[[let g:coq_settings = { 'auto_start': 'shut-up' }]]
 -- alpha
 require'alpha'.setup(require'alpha.themes.startify'.opts)
+-- nvim-gps
+require("nvim-gps").setup({
+	icons = {
+		["class-name"] = ' ',      -- Classes and class-like objects
+		["function-name"] = ' ',   -- Functions
+		["method-name"] = ' '      -- Methods (functions inside class-like objects)
+	},
+	separator = ' > ',
+})
+local gps = require("nvim-gps")
+-- Lualine
+require('lualine').setup({
+  options = { theme = 'tokyonight' },
+  sections = {
+    lualine_c = {'filename', { gps.get_location, condition = gps.is_available }},
+    lualine_x = {'encoding', 'filetype'}
+  },
+})
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -80,7 +94,7 @@ opt.updatetime = 100                -- Delay before swap file is saved
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
 opt.hidden = true                   -- Enable background buffers
---opt.backspace = {"indent", "eol", "start"}
+opt.backspace = {"indent", "eol", "start"}
 opt.incsearch = true                -- Shows the match while typing
 opt.hlsearch = true                 -- Highlight found searches
 opt.joinspaces = false              -- No double spaces with join
