@@ -24,6 +24,7 @@ require 'paq' {
   {'airblade/vim-rooter'},
   {'folke/tokyonight.nvim'}, -- Color scheme
   {'kyazdani42/nvim-tree.lua'}, -- File explorer
+  {'s1n7ax/nvim-terminal'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
@@ -37,9 +38,13 @@ vim.g.tokyonight_style = "night"
 vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 -- nvim-tree
 vim.cmd[[let g:nvim_tree_auto_open = 1]]
+vim.cmd[[let g:nvim_tree_git_hl = 1]]
+-- vim.cmd[[let g:nvim_tree_auto_close = 1]]
 map('n', '<C-n>', ':NvimTreeToggle<CR>')
 map('n', '<leader>r', ':NvimTreeRefresh<CR>')
 map('n', '<leader>n', ':NvimTreeFindFile<CR>')
+-- nvim-terminal
+require('nvim-terminal').setup()
 
 
 -------------------- OPTIONS -------------------------------
