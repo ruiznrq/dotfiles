@@ -162,6 +162,12 @@ lsp_installer.on_server_ready(function(server)
     vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
+-- LSP Prevents inline buffer annotations
+vim.lsp.diagnostic.show_line_diagnostics()
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  virtual_text = false,
+})
+
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
