@@ -103,7 +103,29 @@ opt.numberwidth = 3                 -- Make the gutter wider by default
 vim.cmd[[colorscheme tokyonight]]
 
 -------------------- MAPPINGS ------------------------------
-
+map('', '<leader>c', '"+y')
+map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
+map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
+map('i', 'jj', '<ESC>')
+map('n', '<C-w>T', '<cmd>tabclose<CR>')
+map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
+map('n', '<C-w>t', '<cmd>tabnew<CR>')
+map('n', '<F3>', ':lua toggle_wrap()<CR>')
+map('n', '<F4>', ':set scrollbind!<CR>')
+map('n', '<F5>', ':checktime<CR>')
+map('n', '<S-Down>', '<C-w>2<')
+map('n', '<S-Left>', '<C-w>2-')
+map('n', '<S-Right>', '<C-w>2+')
+map('n', '<S-Up>', '<C-w>2>')
+map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
+map('n', '<leader>t', '<cmd>terminal<CR>')
+map('n', '<leader>u', '<cmd>update<CR>')
+map('n', '<leader>x', '<cmd>conf qa<CR>')
+map('n', 'Q', '<cmd>lua warn_caps()<CR>')
+map('n', 'U', '<cmd>lua warn_caps()<CR>')
+map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
+map('t', 'jj', '<ESC>', {noremap = false})
+map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
 -------------------- LSP -----------------------------------
 local lsp_installer_servers = require'nvim-lsp-installer.servers'
