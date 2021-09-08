@@ -66,12 +66,13 @@ require('lualine').setup({
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
 opt.colorcolumn = tostring(width)   -- Line length marker
+opt.clipboard = "unnamedplus"
 opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
 opt.cursorline = true               -- Highlight cursor line
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.formatoptions = 'crqnj'         -- Automatic formatting options
 opt.ignorecase = true               -- Ignore case
-opt.inccommand = ''                 -- Disable substitution preview
+opt.inccommand = "split"            -- Disable substitution preview
 opt.list = true                     -- Show some invisible characters
 opt.number = true                   -- Show line numbers
 opt.pastetoggle = '<F2>'            -- Paste mode
