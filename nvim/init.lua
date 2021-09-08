@@ -96,12 +96,20 @@ if ok then
         rust_analyzer:install()
     end
 end
-local ok, rust_analyzer = lsp_installer_servers.get_server("omnisharp")
+local ok, omnisharp = lsp_installer_servers.get_server("omnisharp")
 if ok then
-    if not rust_analyzer:is_installed() then
-        rust_analyzer:install()
+    if not omnisharp:is_installed() then
+        omnisharp:install()
     end
 end
+local ok, clangd = lsp_installer_servers.get_server("clangd")
+if ok then
+    if not clangd:is_installed() then
+        clangd:install()
+    end
+end
+-- clangd is not installed in windows
+require'lspconfig'.clangd.setup{}
 
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
