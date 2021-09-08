@@ -174,7 +174,7 @@ map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 -------------------- TREE-SITTER ---------------------------
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {'c', 'cpp', 'c_sharp', 'lua', 'rust', 'zig'}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {'bash', 'c', 'cpp', 'c_sharp', 'comment', 'lua', 'rust', 'toml', 'vi', 'zig'}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,              -- false will disable the whole extension
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
