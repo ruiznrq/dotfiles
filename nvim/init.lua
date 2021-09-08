@@ -312,8 +312,8 @@ local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
 require("telescope").setup({
   defaults = {
-    winblend = 20,
-    sorting_strategy = "descending",
+    winblend = 20, -- Transparency
+    sorting_strategy = "descending", -- Where first selection should be located
     layout_strategy = "horizontal",
     mappings = {
       i = {
@@ -326,14 +326,14 @@ require("telescope").setup({
       sort_lastused = true,
       mappings = {
         i = {
-          ["<C-w>"] = "delete_buffer",
+          ["<C-w>"] = "delete_buffer", -- Delete input
         },
         n = {
-          ["<C-w>"] = "delete_buffer",
+          ["<C-w>"] = "delete_buffer", -- Delete input
         },
       },
     },
-    -- https://gitter.im/nvim-telescope/community?at=6113b874025d436054c468e6 Fabian David Schmidt
+    -- Type :line to go to line
     find_files = {
       on_input_filter_cb = function(prompt)
         local find_colon = string.find(prompt, ":")
@@ -371,27 +371,11 @@ require("telescope").setup({
   },
 })
 
-map(
-  "n",
-  "<leader>p",
-  '<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>'
-)
-map("n", "<leader>r", '<cmd>lua require("telescope.builtin").registers()<cr>')
-map(
-  "n",
-  "<leader>g",
-  '<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>'
-)
-map("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({}))<cr>')
-map("n", "<leader>j", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
-map(
-  "n",
-  "<leader>f",
-  '<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>'
-)
-map("n", "<leader>s", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
-map(
-  "n",
-  "<leader>i",
-  '<cmd>lua require("telescope.builtin").git_status(require("telescope.themes").get_dropdown({}))<cr>'
-)
+map("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>fr", '<cmd>lua require("telescope.builtin").registers()<cr>')
+map("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>fh", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
+map("n", "<leader>fi", '<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>fs", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
+map("n", "<leader>git", '<cmd>lua require("telescope.builtin").git_status(require("telescope.themes").get_dropdown({}))<cr>')
