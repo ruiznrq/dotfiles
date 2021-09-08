@@ -27,6 +27,7 @@ require 'paq' {
   {'ms-jpq/chadtree', {branch = 'chad', run = 'python3 -m chadtree deps'}}, -- File explorer
   {'s1n7ax/nvim-terminal'},
   {'airblade/vim-rooter'},
+  {'goolord/alpha-nvim'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
@@ -45,6 +46,8 @@ map('n', '<leader>l', '<cmd>call setqflist([])<cr>')
 require('nvim-terminal').setup()
 -- coq
 vim.cmd[[let g:coq_settings = { 'auto_start': 'shut-up' }]]
+-- alpha
+require'alpha'.setup(require'alpha.themes.startify'.opts)
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
