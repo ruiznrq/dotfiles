@@ -18,23 +18,16 @@ require 'paq' {
 	{'neoclide/coc.nvim', branch = 'release'},
   {'nvim-treesitter/nvim-treesitter'},
   {'itchyny/lightline.vim'},
-  {'junegunn/fzf'},
-  {'junegunn/fzf.vim'},
-  {'ojroques/nvim-lspfuzzy', branch = 'dev'},
+  {'nvim-lua/plenary.nvim'},
+  {'nvim-telescope/telescope.nvim'},
+  {'kyazdani42/nvim-web-devicons'},
+  {'airblade/vim-rooter'}
 }
 
 -------------------- PLUGIN SETUP --------------------------
 -- lightline
 vim.api.nvim_command('set noshowmode') -- Don't display insert mode
--- fzf and fzf.vim
-g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
-map('n', '<leader>/', '<cmd>History/<CR>')
-map('n', '<leader>;', '<cmd>History:<CR>')
-map('n', '<leader>f', '<cmd>Files<CR>')
-map('n', '<leader>r', '<cmd>Rg<CR>')
-map('n', 's', '<cmd>Buffers<CR>')
--- nvim-lspfuzzy
-require('lspfuzzy').setup()
+
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
