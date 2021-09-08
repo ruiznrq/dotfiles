@@ -17,16 +17,23 @@ require 'paq' {
 	{'savq/paq-nvim', opt = true},
 	{'neoclide/coc.nvim', branch = 'release'},
   {'nvim-treesitter/nvim-treesitter'},
-  {'itchyny/lightline.vim'},
   {'nvim-lua/plenary.nvim'},
   {'nvim-telescope/telescope.nvim'},
-  {'kyazdani42/nvim-web-devicons'},
-  {'airblade/vim-rooter'}
+  {'hoob3rt/lualine.nvim'}, -- Status line
+  {'kyazdani42/nvim-web-devicons'}, -- Icons
+  {'airblade/vim-rooter'},
+  {'folke/tokyonight.nvim'}, -- Color scheme
 }
 
 -------------------- PLUGIN SETUP --------------------------
--- lightline
-vim.api.nvim_command('set noshowmode') -- Don't display insert mode
+-- Lualine
+require('lualine').setup({
+  options = { theme = 'tokyonight' },
+  sections = { lualine_x = {'encoding', 'filetype'} },
+})
+-- Tokyonight
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 
 
 -------------------- OPTIONS -------------------------------
@@ -59,7 +66,7 @@ opt.textwidth = width               -- Maximum width of text
 opt.updatetime = 100                -- Delay before swap file is saved
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
-
+vim.cmd[[colorscheme tokyonight]]
 
 -------------------- MAPPINGS ------------------------------
 
@@ -212,7 +219,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
