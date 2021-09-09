@@ -1,0 +1,1 @@
+choco install alacritty.install bat chocolatey curl Cygwin delta fd Firefox fzf git.install gitui llvm mingw neovim nodejs.install notepadplusplus.install nushell.install powershell-core powertoys python ripgrep rustup.install sd-cli SQLite starship sumatrapdf.install tartool unzip Wget zoxide
