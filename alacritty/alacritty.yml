@@ -103,9 +103,7 @@ cursor:
     # args:
     # - --login
 shell:
-  program: powershell
-  args:
-    - pwsh
+  program: "C:/Program Files/nu/bin/nu.exe"
 
 
 # Key bindings
