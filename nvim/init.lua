@@ -63,6 +63,11 @@ require('lualine').setup({
   },
 })
 
+-- Neovide --
+vim.cmd[[let neovide_remember_window_size = v:true]]
+vim.cmd[[let g:neovide_refresh_rate=60]]
+vim.cmd[[set guifont=Hack\ NF:h18]]
+
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
 opt.colorcolumn = tostring(width)   -- Line length marker
