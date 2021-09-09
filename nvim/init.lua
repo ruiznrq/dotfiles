@@ -235,9 +235,13 @@ local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
 require("telescope").setup({
   defaults = {
+    layout_config = {
+      horizontal = { width = 0.99, height = 0.99 },
+      vertical = { width = 0.99, height = 0.99 },
+    },
     winblend = 20, -- Transparency
     sorting_strategy = "descending", -- Where first selection should be located
-    layout_strategy = "horizontal",
+    layout_strategy = "vertical",
     mappings = {
       i = {
         ["<esc>"] = actions.close,
@@ -294,11 +298,11 @@ require("telescope").setup({
   },
 })
 
-map("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files()<cr>')
 map("n", "<leader>fr", '<cmd>lua require("telescope.builtin").registers()<cr>')
-map("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>')
-map("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep()<cr>')
+map("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<cr>')
 map("n", "<leader>fh", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
-map("n", "<leader>fi", '<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>fi", '<cmd>lua require("telescope.builtin").file_browser()<cr>')
 map("n", "<leader>fs", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
-map("n", "<leader>git", '<cmd>lua require("telescope.builtin").git_status(require("telescope.themes").get_dropdown({}))<cr>')
+map("n", "<leader>git", '<cmd>lua require("telescope.builtin").git_status()<cr>')
