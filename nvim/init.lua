@@ -107,6 +107,7 @@ opt.hlsearch = true                 -- Highlight found searches
 opt.joinspaces = false              -- No double spaces with join
 opt.linebreak = true                -- Stop words being broken on wrap
 opt.numberwidth = 3                 -- Make the gutter wider by default
+opt.swapfile = false                -- Disable swap file
 vim.cmd[[colorscheme tokyonight]]
 
 -------------------- MAPPINGS ------------------------------
