@@ -134,7 +134,17 @@ map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jj', '<ESC>', {noremap = false})
-map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
+map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>', {silent = true})
+-- Clipboard copy
+map('v', '<leader>y', '"+y')
+map('n', '<leader>Y', '"+yg_')
+map('n', '<leader>y', '"+y')
+map('n', '<leader>yy', '"+yy')
+-- Clipboard Paste
+map('n', '<leader>p', '"+p')
+map('n', '<leader>P', '"+P')
+map('v', '<leader>p', '"+p')
+map('v', '<leader>P', '"+P')
 
 -------------------- LSP -----------------------------------
 local lsp_installer_servers = require'nvim-lsp-installer.servers'
