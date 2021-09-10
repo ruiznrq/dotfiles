@@ -113,7 +113,7 @@ vim.cmd[[colorscheme tokyonight]]
 map('', '<leader>c', '"+y')
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
-map('i', 'jj', '<ESC>')
+map('i', 'jk', '<ESC>')
 map('n', '<C-w>T', '<cmd>tabclose<CR>')
 map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
 map('n', '<C-w>t', '<cmd>tabnew<CR>')
