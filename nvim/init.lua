@@ -69,6 +69,7 @@ vim.cmd[[let g:neovide_refresh_rate=60]]
 vim.cmd[[set guifont=Hack\ NF:h18]]
 
 -------------------- OPTIONS -------------------------------
+vim.cmd[[set path +=**]]	    -- Allows :find to be recursive
 local indent, width = 2, 80
 opt.colorcolumn = tostring(width)   -- Line length marker
 opt.clipboard = "unnamedplus"
