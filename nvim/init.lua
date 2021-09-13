@@ -29,6 +29,7 @@ require 'paq' {
   {'airblade/vim-rooter'},
   {'goolord/alpha-nvim'},
   {'smiteshp/nvim-gps'},
+  {'ggandor/lightspeed.nvim'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
