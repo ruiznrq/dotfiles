@@ -14,24 +14,48 @@ g.mapleader = ' '
 -------------------- PLUGINS -------------------------------
 require 'paq' {
 	{'savq/paq-nvim', opt = true},
+  -- Lsp
   {'neovim/nvim-lspconfig'},
   {'williamboman/nvim-lsp-installer'},
-  {'ms-jpq/coq_nvim', branch = 'coq'},
-  {'ms-jpq/coq.artifacts', branch = 'artifacts'},
+  -- Completion
+  {'hrsh7th/cmp-nvim-lsp'},
+  {'hrsh7th/cmp-buffer'},
+  {'hrsh7th/cmp-path'},
+  {'hrsh7th/cmp-nvim-lua'},
+  {'hrsh7th/nvim-cmp'},
+  -- Completion - Snippets
+  {'L3MON4D3/LuaSnip'},
+  {'saadparwaiz1/cmp_luasnip'},
+  -- Completion - Signatures
+  {'ray-x/lsp_signature.nvim'},
+  -- Treesitter
   {'nvim-treesitter/nvim-treesitter'},
+  -- Fuzzy find
   {'nvim-lua/plenary.nvim'},
   {'nvim-telescope/telescope.nvim'},
-  {'kyazdani42/nvim-web-devicons'}, -- Icons
-  {'folke/tokyonight.nvim'}, -- Color scheme
-  {'hoob3rt/lualine.nvim'}, -- Status line
-  {'ms-jpq/chadtree', {branch = 'chad', run = 'python3 -m chadtree deps'}}, -- File explorer
+   -- Icons
+  {'kyazdani42/nvim-web-devicons'},
+   -- Color scheme
+  {'folke/tokyonight.nvim'},
+   -- Status line
+  {'hoob3rt/lualine.nvim'},
+  -- File explorer
+  {'kyazdani42/nvim-tree.lua'},
+  -- Terminal
   {'s1n7ax/nvim-terminal'},
+  -- Change the working directory to the project root
   {'airblade/vim-rooter'},
+  -- Init screen
   {'goolord/alpha-nvim'},
+  -- Show in status line current location
   {'smiteshp/nvim-gps'},
+  -- Jump in buffer
   {'ggandor/lightspeed.nvim'},
+  -- Auto close brackets
   {'windwp/nvim-autopairs'},
+  -- Tabs bar
   {'romgrk/barbar.nvim'},
+  -- Smooth scroll
   {'karb94/neoscroll.nvim'},
 }
 
@@ -44,8 +68,45 @@ map('n', '<leader>v', '<cmd>CHADopen<cr>')
 map('n', '<leader>l', '<cmd>call setqflist([])<cr>')
 -- nvim-terminal
 require('nvim-terminal').setup()
--- coq
-vim.cmd[[let g:coq_settings = { 'auto_start': 'shut-up' }]]
+-- cmp
+local cmp = require'cmp'
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      -- For `vsnip` user.
+      --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+
+      -- For `luasnip` user.
+      require('luasnip').lsp_expand(args.body)
+
+      -- For `ultisnips` user.
+      -- vim.fn["UltiSnips#Anon"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+
+    -- For vsnip user.
+    --{ name = 'vsnip' },
+
+    -- For luasnip user.
+    { name = 'luasnip' },
+
+    -- For ultisnips user.
+    -- { name = 'ultisnips' },
+
+    { name = 'buffer' },
+  }
+})
+-- nvim-tree
+require'nvim-tree'.setup()
 -- alpha
 require'alpha'.setup(require'alpha.themes.startify'.opts)
 -- nvim-gps
@@ -67,7 +128,16 @@ require('lualine').setup({
   },
 })
 -- nvim-autopairs
-require('nvim-autopairs').setup{}
+require("nvim-autopairs.completion.cmp").setup({
+  map_cr = true, --  map <CR> on insert mode
+  map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
+  auto_select = true, -- automatically select the first item
+  insert = false, -- use insert confirm behavior instead of replace
+  map_char = { -- modifies the function or method delimiter by filetypes
+    all = '(',
+    tex = '{'
+  }
+})
 -- barbar
 local barbaropts = { noremap = true, silent = true }
 -- Move to previous/next
@@ -198,11 +268,15 @@ if ok then
     end
 end
 -- clangd is not installed in windows
-require'lspconfig'.clangd.setup{}
+require'lspconfig'.clangd.setup{
+  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+}
 
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
+    local opts = {
+      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    }
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
     --     opts.root_dir = function() ... end
@@ -229,6 +303,9 @@ map('n', '<space>H', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
 map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
 map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+
+-- lsp_signature configuration
+require "lsp_signature".setup()
 
 -------------------- TREE-SITTER ---------------------------
 require'nvim-treesitter.configs'.setup {
