@@ -184,7 +184,6 @@ opt.splitright = true               -- Put new windows right of current
 opt.tabstop = indent                -- Number of spaces tabs count for
 opt.termguicolors = true            -- True color support
 opt.textwidth = width               -- Maximum width of text
-opt.updatetime = 100                -- Delay before swap file is saved
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
 opt.hidden = true                   -- Enable background buffers
