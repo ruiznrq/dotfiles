@@ -37,6 +37,8 @@ require 'paq' {
   {'kyazdani42/nvim-web-devicons'},
    -- Color scheme
   {'folke/tokyonight.nvim'},
+  -- Show in status line current location
+  {'smiteshp/nvim-gps'},
    -- Status line
   {'hoob3rt/lualine.nvim'},
   -- File explorer
@@ -47,8 +49,6 @@ require 'paq' {
   {'airblade/vim-rooter'},
   -- Init screen
   {'goolord/alpha-nvim'},
-  -- Show in status line current location
-  {'smiteshp/nvim-gps'},
   -- Jump in buffer
   {'ggandor/lightspeed.nvim'},
   -- Auto close brackets
@@ -89,12 +89,6 @@ cmp.setup({
 -- Tokyonight
 vim.g.tokyonight_style = "night"
 vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
--- nvim-terminal
-require('nvim-terminal').setup()
--- nvim-tree
-require'nvim-tree'.setup()
--- alpha
-require'alpha'.setup(require'alpha.themes.startify'.opts)
 -- nvim-gps
 require("nvim-gps").setup({
 	icons = {
@@ -113,6 +107,13 @@ require('lualine').setup({
     lualine_x = {'encoding', 'filetype'}
   },
 })
+-- nvim-tree
+require'nvim-tree'.setup()
+map('n', '<leader>n', ':NvimTreeToggle<CR>')
+-- nvim-terminal
+require('nvim-terminal').setup()
+-- alpha
+require'alpha'.setup(require'alpha.themes.startify'.opts)
 -- nvim-autopairs
 require("nvim-autopairs.completion.cmp").setup({
   map_cr = true, --  map <CR> on insert mode
@@ -210,7 +211,6 @@ map('n', '<S-Left>', '<C-w>2-')
 map('n', '<S-Right>', '<C-w>2+')
 map('n', '<S-Up>', '<C-w>2>')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
-map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
 map('n', '<leader>x', '<cmd>conf qa<CR>')
 map('n', '<leader>w', ':w<CR>')
