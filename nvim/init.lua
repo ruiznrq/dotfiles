@@ -60,27 +60,12 @@ require 'paq' {
 }
 
 -------------------- PLUGIN SETUP --------------------------
--- Tokyonight
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
--- ChadTree
-map('n', '<leader>v', '<cmd>CHADopen<cr>')
-map('n', '<leader>l', '<cmd>call setqflist([])<cr>')
--- nvim-terminal
-require('nvim-terminal').setup()
 -- cmp
 local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      -- For `vsnip` user.
-      --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
-
-      -- For `luasnip` user.
       require('luasnip').lsp_expand(args.body)
-
-      -- For `ultisnips` user.
-      -- vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
   mapping = {
@@ -92,19 +77,20 @@ cmp.setup({
   },
   sources = {
     { name = 'nvim_lsp' },
-
-    -- For vsnip user.
-    --{ name = 'vsnip' },
-
-    -- For luasnip user.
     { name = 'luasnip' },
-
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
-
     { name = 'buffer' },
-  }
+    { name = "nvim_lua" },
+    { name = "path" },
+  },
+  documentation = {
+    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  },
 })
+-- Tokyonight
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+-- nvim-terminal
+require('nvim-terminal').setup()
 -- nvim-tree
 require'nvim-tree'.setup()
 -- alpha
@@ -171,7 +157,7 @@ vim.cmd[[set guifont=Hack\ NF:h18]]
 
 -------------------- OPTIONS -------------------------------
 vim.cmd[[set path +=**]]	    -- Allows :find to be recursive
-local indent, width = 2, 80
+local indent, width = 4, 120
 opt.colorcolumn = tostring(width)   -- Line length marker
 opt.clipboard = "unnamedplus"
 opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
@@ -213,8 +199,6 @@ vim.cmd[[colorscheme tokyonight]]
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jk', '<ESC>')
 map('n', '<C-w>T', '<cmd>tabclose<CR>')
 map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
@@ -234,7 +218,7 @@ map('n', '<leader>w', ':w<CR>')
 map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
-map('t', 'jj', '<ESC>', {noremap = false})
+map('t', 'jk', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>', {silent = true})
 -- Clipboard copy
 map('v', '<leader>y', '"+y')
@@ -361,13 +345,33 @@ local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
 require("telescope").setup({
   defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+    },
     layout_config = {
       horizontal = { width = 0.99, height = 0.99 },
       vertical = { width = 0.99, height = 0.99 },
     },
     winblend = 20, -- Transparency
+    border = {},
+    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
     sorting_strategy = "descending", -- Where first selection should be located
     layout_strategy = "vertical",
+    file_sorter = require("telescope.sorters").get_fzy_sorter,
+    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+    path_display = { shorten = 5 },
     mappings = {
       i = {
         ["<esc>"] = actions.close,
