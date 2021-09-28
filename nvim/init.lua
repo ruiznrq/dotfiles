@@ -32,6 +32,7 @@ require 'paq' {
   {'ggandor/lightspeed.nvim'},
   {'windwp/nvim-autopairs'},
   {'romgrk/barbar.nvim'},
+  {'karb94/neoscroll.nvim'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
@@ -88,6 +89,10 @@ map('n', '<A-9>', ':BufferGoto 9<CR>', opts)
 map('n', '<A-0>', ':BufferLast<CR>', opts)
 -- Close buffer
 map('n', '<A-c>', ':BufferClose<CR>', opts)
+-- neoscroll
+require('neoscroll').setup({
+  easing_function = "quintic" -- Default easing function
+})
 
 -- Neovide --
 vim.cmd[[let neovide_remember_window_size = v:true]]
