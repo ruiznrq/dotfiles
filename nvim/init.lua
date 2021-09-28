@@ -33,6 +33,8 @@ require 'paq' {
   -- Fuzzy find
   {'nvim-lua/plenary.nvim'},
   {'nvim-telescope/telescope.nvim'},
+  -- FZF in C for telescope
+  {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
    -- Icons
   {'kyazdani42/nvim-web-devicons'},
    -- Color scheme
@@ -109,7 +111,7 @@ require('lualine').setup({
 })
 -- nvim-tree
 require'nvim-tree'.setup()
-map('n', '<leader>n', ':NvimTreeToggle<CR>')
+map('n', '<leader>v', ':NvimTreeToggle<CR>')
 -- nvim-terminal
 require('nvim-terminal').setup()
 -- alpha
@@ -132,7 +134,7 @@ map('n', '<A-,>', ':BufferPrevious<CR>', opts)
 map('n', '<A-.>', ':BufferNext<CR>', opts)
 -- Re-order to previous/next
 map('n', '<A-<>', ':BufferMovePrevious<CR>', opts)
-map('n', '<A->>', ' :BufferMoveNext<CR>', opts)
+map('n', '<A->>', ':BufferMoveNext<CR>', opts)
 -- Goto buffer in position...
 map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
 map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
@@ -198,19 +200,11 @@ opt.swapfile = false                -- Disable swap file
 vim.cmd[[colorscheme tokyonight]]
 
 -------------------- MAPPINGS ------------------------------
-map('', '<leader>c', '"+y')
 map('i', 'jk', '<ESC>')
-map('n', '<C-w>T', '<cmd>tabclose<CR>')
-map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
-map('n', '<C-w>t', '<cmd>tabnew<CR>')
 map('n', '<F3>', ':lua toggle_wrap()<CR>')
 map('n', '<F4>', ':set scrollbind!<CR>')
 map('n', '<F5>', ':checktime<CR>')
-map('n', '<S-Down>', '<C-w>2<')
-map('n', '<S-Left>', '<C-w>2-')
-map('n', '<S-Right>', '<C-w>2+')
-map('n', '<S-Up>', '<C-w>2>')
-map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
+map('n', '<leader>c', ':%s//gcI<Left><Left><Left><Left>')
 map('n', '<leader>u', '<cmd>update<CR>')
 map('n', '<leader>x', '<cmd>conf qa<CR>')
 map('n', '<leader>w', ':w<CR>')
@@ -218,7 +212,7 @@ map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jk', '<ESC>', {noremap = false})
-map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>', {silent = true})
+map('v', '<leader>c', ':s//gcI<Left><Left><Left><Left>', {silent = true})
 -- Clipboard copy
 map('v', '<leader>y', '"+y')
 map('n', '<leader>Y', '"+yg_')
@@ -304,26 +298,10 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -------------------- COMMANDS ------------------------------
-function init_term()
-  cmd 'setlocal nonumber norelativenumber'
-  cmd 'setlocal nospell'
-  cmd 'setlocal signcolumn=auto'
-end
-
 function toggle_wrap()
   wo.breakindent = not wo.breakindent
   wo.linebreak = not wo.linebreak
   wo.wrap = not wo.wrap
-end
-
-function toggle_zoom()
-  if zoomed then
-    cmd 'wincmd ='
-    zoomed = false
-  else
-    cmd 'resize | vertical resize'
-    zoomed = true
-  end
 end
 
 function warn_caps()
@@ -363,10 +341,7 @@ require("telescope").setup({
     color_devicons = true,
     use_less = true,
     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-    sorting_strategy = "descending", -- Where first selection should be located
+    sorting_strategy = "ascending", -- Where first selection should be located
     layout_strategy = "vertical",
     file_sorter = require("telescope.sorters").get_fzy_sorter,
     generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
@@ -376,6 +351,15 @@ require("telescope").setup({
         ["<esc>"] = actions.close,
       },
     },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
   },
   pickers = {
     buffers = {
@@ -427,11 +411,16 @@ require("telescope").setup({
   },
 })
 
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+
 map("n", "<leader>ff", '<cmd>lua require("telescope.builtin").find_files()<cr>')
-map("n", "<leader>fr", '<cmd>lua require("telescope.builtin").registers()<cr>')
-map("n", "<leader>fg", '<cmd>lua require("telescope.builtin").live_grep()<cr>')
+map("n", "<leader>fg", '<cmd>lua require("telescope.builtin").livegrep()<cr>')
 map("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<cr>')
 map("n", "<leader>fh", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
-map("n", "<leader>fi", '<cmd>lua require("telescope.builtin").file_browser()<cr>')
+map("n", "<leader>fr", '<cmd>lua require("telescope.builtin").registers()<cr>')
+map("n", "<leader>fv", '<cmd>lua require("telescope.builtin").file_browser()<cr>')
 map("n", "<leader>fs", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
 map("n", "<leader>git", '<cmd>lua require("telescope.builtin").git_status()<cr>')
+map("n", "<leader>ft", '<cmd>lua require("telescope.builtin").treesitter()<cr>')
