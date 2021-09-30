@@ -96,14 +96,10 @@ cursor:
     # Vi mode cursor style
     vi_mode_style: Block
 
-# Default shell
-# For osx uncomment the following
-    # shell:
-        # program: /usr/local/bin/bash  # osx
-    # args:
-    # - --login
 shell:
-  program: "C:/Program Files/nu/bin/nu.exe"
+  program: pwsh
+  args:
+    - -NoLogo
 
 
 # Key bindings
