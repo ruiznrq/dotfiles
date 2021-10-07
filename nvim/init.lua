@@ -244,6 +244,12 @@ if ok then
         clangd:install()
     end
 end
+local ok, pyright = lsp_installer_servers.get_server("pyright")
+if ok then
+    if not pyright:is_installed() then
+        pyright:install()
+    end
+end
 -- clangd is not installed in windows
 require'lspconfig'.clangd.setup{
   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
